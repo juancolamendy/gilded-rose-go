@@ -37,12 +37,12 @@ var tests = []struct {
 	{"Backstage passes to a TAFKAL80ETC concert", "very close to sell date (lower bound) at max quality", 1, 50, 0, 50},
 	{"Backstage passes to a TAFKAL80ETC concert", "on sell date", 0, 10, -1, 0},
 	{"Backstage passes to a TAFKAL80ETC concert", "after sell date", -10, 10, -11, 0},
-	// {"Conjured Mana Cake", "before sell date", 5, 10, 4, 8},
-	// {"Conjured Mana Cake", "before sell date at zero quality", 5, 0, 4, 0},
-	// {"Conjured Mana Cake", "on sell date", 0, 10, -1, 6},
-	// {"Conjured Mana Cake", "on sell date at zero quality", 0, 0, -1, 0},
-	// {"Conjured Mana Cake", "after sell date", -10, 10, -11, 6},
-	// {"Conjured Mana Cake", "after sell date at zero quality", -10, 0, -11, 0},
+	{"Conjured Mana Cake", "before sell date", 5, 10, 4, 8},
+	{"Conjured Mana Cake", "before sell date at zero quality", 5, 0, 4, 0},
+	{"Conjured Mana Cake", "on sell date", 0, 10, -1, 6},
+	{"Conjured Mana Cake", "on sell date at zero quality", 0, 0, -1, 0},
+	{"Conjured Mana Cake", "after sell date", -10, 10, -11, 6},
+	{"Conjured Mana Cake", "after sell date at zero quality", -10, 0, -11, 0},
 }
 
 func TestGildedRose(t *testing.T) {

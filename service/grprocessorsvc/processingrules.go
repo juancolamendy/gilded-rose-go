@@ -11,6 +11,7 @@ const (
 	AGED_BRIE = "aged brie"
 	LEGENDARY = "legendary sulfuras, hand of ragnaros"
 	BACKSTAGE = "backstage passes to a tafkal80etc concert"
+	CONJURED  = "conjured mana cake"
 )
 
 type ruleFn func(item *Item)
@@ -20,6 +21,7 @@ var (
 		AGED_BRIE: defaultAgedBrie,
 		LEGENDARY: defaultLegendary,
 		BACKSTAGE: defaultBackstage,
+		CONJURED:  conjuredtRule,
 	}
 )
 
@@ -42,13 +44,13 @@ func getProcessingRule(item *Item) ruleFn {
 }
 
 func defaultRule(item *Item) {
-	log.Printf("--- Applying 'default' rule to item: %s", item.String())	
+	log.Printf("--- Applying 'default' rule to item: %s", item.String())
+	// apply rules
 	// default adjustment
 	adjustment := -1
 	if item.days <= 0 {
 		adjustment = -2
-	}
-	// apply rules
+	}	
 	// adjust day
 	item.days = item.days - 1
 	// adjust quality
@@ -57,12 +59,12 @@ func defaultRule(item *Item) {
 
 func defaultAgedBrie(item *Item) {
 	log.Printf("--- Applying 'aged brie' rule to item: %s", item.String())	
+	// apply rules
 	// default adjustment
 	adjustment := 1
 	if item.days <= 0 {
 		adjustment = 2
-	}
-	// apply rules
+	}	
 	// adjust day
 	item.days = item.days - 1
 	// adjust quality
@@ -93,5 +95,19 @@ func defaultBackstage(item *Item) {
 		item.quality = 0
 		return
 	}	
+	item.quality = adjust(item.quality, adjustment, 0, 50)
+}
+
+func conjuredtRule(item *Item) {
+	log.Printf("--- Applying 'conjured' rule to item: %s", item.String())
+	// apply rules
+	// default adjustment
+	adjustment := -2
+	if item.days <= 0 {
+		adjustment = -4
+	}	
+	// adjust day
+	item.days = item.days - 1
+	// adjust quality
 	item.quality = adjust(item.quality, adjustment, 0, 50)
 }
