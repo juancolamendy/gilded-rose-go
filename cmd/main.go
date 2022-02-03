@@ -7,6 +7,7 @@ import(
 )
 
 func main(){
-	grprocessorsvc.Process()
-	fmt.Println("Hello world")
+	item := grprocessorsvc.New("normal", 5, 10)
+	grprocessorsvc.Process(item)
+	fmt.Printf("Result item: %s\n", item.String())
 }
