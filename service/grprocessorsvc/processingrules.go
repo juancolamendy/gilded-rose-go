@@ -32,6 +32,13 @@ func adjust(value, adjust, lowBound, highBound int) int {
 	return calc
 }
 
+func adjustDayQuality(item *Item, adjustment int) {
+	// adjust day
+	item.days -= 1
+	// adjust quality
+	item.quality = adjust(item.quality, adjustment, 0, 50)	
+}
+
 func getProcessingRule(item *Item) ruleFn {
 	// get key
 	key := strings.ToLower(item.name)
@@ -48,13 +55,12 @@ func defaultRule(item *Item) {
 	// apply rules
 	// default adjustment
 	adjustment := -1
+	// calc adjustment
 	if item.days <= 0 {
 		adjustment = -2
-	}	
-	// adjust day
-	item.days = item.days - 1
-	// adjust quality
-	item.quality = adjust(item.quality, adjustment, 0, 50)
+	}
+	// adjust day and quality
+	adjustDayQuality(item, adjustment)
 }
 
 func defaultAgedBrie(item *Item) {
@@ -62,13 +68,12 @@ func defaultAgedBrie(item *Item) {
 	// apply rules
 	// default adjustment
 	adjustment := 1
+	// calc adjustment
 	if item.days <= 0 {
 		adjustment = 2
-	}	
-	// adjust day
-	item.days = item.days - 1
-	// adjust quality
-	item.quality = adjust(item.quality, adjustment, 0, 50)
+	}
+	// adjust day and quality
+	adjustDayQuality(item, adjustment)
 }
 
 func defaultLegendary(item *Item) {
@@ -81,21 +86,23 @@ func defaultBackstage(item *Item) {
 	// apply rules
 	// default adjustment
 	adjustment := 0
-	if item.days > 10 {
+	// calc adjustment
+	switch {
+	case item.days > 10:
 		adjustment = 1
-	} else if item.days > 5 {
+	case item.days > 5:
 		adjustment = 2
-	} else if item.days > 0 {
+	case item.days > 0:
 		adjustment = 3
 	}
-	// adjust day
-	item.days = item.days - 1
-	// adjust quality
+	// adjust quality for zero case
 	if adjustment == 0 {
+		item.days -= 1
 		item.quality = 0
 		return
-	}	
-	item.quality = adjust(item.quality, adjustment, 0, 50)
+	}
+	// adjust day and quality
+	adjustDayQuality(item, adjustment)
 }
 
 func conjuredtRule(item *Item) {
@@ -103,11 +110,10 @@ func conjuredtRule(item *Item) {
 	// apply rules
 	// default adjustment
 	adjustment := -2
+	// calc adjustment
 	if item.days <= 0 {
 		adjustment = -4
-	}	
-	// adjust day
-	item.days = item.days - 1
-	// adjust quality
-	item.quality = adjust(item.quality, adjustment, 0, 50)
+	}
+	// adjust day and quality
+	adjustDayQuality(item, adjustment)
 }
